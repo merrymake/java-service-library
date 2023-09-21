@@ -1,0 +1,11 @@
+on:
+  push:
+    # Pattern matched against refs/tags
+    tags:
+      - "*" # Push events to every tag not containing /
+
+jobs:
+  deploy:
+    container: gradle:8.2.1-jdk17
+    steps:
+      - run: "gradle publish"
