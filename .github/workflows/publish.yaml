@@ -6,6 +6,7 @@ on:
 
 jobs:
   deploy:
+    runs-on: ubuntu-latest
     container: gradle:8.2.1-jdk17
     steps:
       - run: "gradle publish"
