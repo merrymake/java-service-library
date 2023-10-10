@@ -4,6 +4,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * MimeType is used to specify the ContentType of a payload. For convenience the most common file extensions are defined as constants.
+ * @author Merrymake.eu (Chirstian Clausen, Nicolaj Græsholt)
+ */
 public class MimeType {
 
     public static final MimeType aac = new MimeType("audio", "aac");
@@ -83,7 +87,7 @@ public class MimeType {
     public static final MimeType _3g2 = new MimeType("video", "3gpp2");
     public static final MimeType _7z = new MimeType("application", "x-7z-compressed");
 
-    public static final Map<String, MimeType> ext2mime = Collections.unmodifiableMap(new HashMap<String, MimeType>(){{
+    static final Map<String, MimeType> ext2mime = Collections.unmodifiableMap(new HashMap<String, MimeType>(){{
         put("aac", aac);
         put("abw", abw);
         put("arc", arc);
@@ -162,9 +166,14 @@ public class MimeType {
         put("_7z", _7z);
     }});
 
-    private String type;
-    private String tail;
+    private final String type;
+    private final String tail;
 
+    /**
+     * Specify a content-type like application/json
+     * @param type the part before /
+     * @param tail the part after /
+     */
     public MimeType(String type, String tail){
         this.type = type;
         this.tail = tail;

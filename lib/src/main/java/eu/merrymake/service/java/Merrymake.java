@@ -9,8 +9,19 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+/**
+ * Merrymake is the main class of this library, as it exposes all other functionality, through a builder pattern.
+ *
+ * @author Merrymake.eu (Chirstian Clausen, Nicolaj Græsholt)
+ */
 public class Merrymake implements MerrymakeInterface {
 
+    /**
+     * This is the root call for a Merrymake service.
+     *
+     * @param args the arguments from the main method
+     * @return a Merrymake builder to make further calls on
+     */
     public static Merrymake service(String[] args) {
         return new Merrymake(args);
     }
@@ -54,7 +65,7 @@ public class Merrymake implements MerrymakeInterface {
             var client = HttpClient.newBuilder().version(HttpClient.Version.HTTP_1_1).build();
             var request = requestCompleter.fix(HttpRequest
                     .newBuilder(URI.create(System.getenv("RAPIDS") + "/" + event))).build();
-            var response = client.send(request, HttpResponse.BodyHandlers.discarding());
+            client.send(request, HttpResponse.BodyHandlers.discarding());
         } catch (InterruptedException e) {
             throw new RuntimeException("Interrupted contacting rapids.");
         } catch (IOException e) {
@@ -62,42 +73,86 @@ public class Merrymake implements MerrymakeInterface {
         }
     }
 
+    /**
+     * Post an event to the central message queue (Rapids), with a payload and its content type.
+     *
+     * @param event       the event to post
+     * @param body        the payload
+     * @param contentType the content type of the payload
+     */
     public static void postToRapids(String event, byte[] body, MimeType contentType) {
         internalPostToRapids(event, req -> req
                 .header("Content-Type", contentType.toString())
                 .POST(HttpRequest.BodyPublishers.ofByteArray(body)));
     }
 
+    /**
+     * Post an event to the central message queue (Rapids), with a payload and its content type.
+     *
+     * @param event       the event to post
+     * @param body        the payload
+     * @param contentType the content type of the payload
+     */
     public static void postToRapids(String event, String body, MimeType contentType) {
         internalPostToRapids(event, req -> req
                 .header("Content-Type", contentType.toString())
                 .POST(HttpRequest.BodyPublishers.ofString(body)));
     }
 
+    /**
+     * Post an event to the central message queue (Rapids), without a payload.
+     *
+     * @param event the event to post
+     */
     public static void postToRapids(String event) {
         internalPostToRapids(event, req -> req
                 .POST(HttpRequest.BodyPublishers.noBody()));
     }
 
+    /**
+     * Post a reply back to the originator of the trace, with a payload and its content type.
+     *
+     * @param body        the payload
+     * @param contentType the content type of the payload
+     */
     public static void replyToOrigin(byte[] body, MimeType contentType) {
         postToRapids("$reply", body, contentType);
     }
 
+    /**
+     * Post a reply back to the originator of the trace, with a payload and its content type.
+     *
+     * @param body        the payload
+     * @param contentType the content type of the payload
+     */
     public static void replyToOrigin(String body, MimeType contentType) {
         postToRapids("$reply", body, contentType);
     }
 
+    /**
+     * Send a file back to the originator of the trace.
+     *
+     * @param path        the path to the file starting from main/resources
+     * @param contentType the content type of the file
+     */
     public static void replyFileToOrigin(String path, MimeType contentType) throws FileNotFoundException, IOException {
-        byte[] data = Merrymake.class.getClassLoader().getResourceAsStream(path).readAllBytes();
-        postToRapids("$reply", data, contentType);
+        try (var resource = Merrymake.class.getClassLoader().getResourceAsStream(path)) {
+            if(resource == null) throw new FileNotFoundException();
+            byte[] data = resource.readAllBytes();
+            postToRapids("$reply", data, contentType);
+        }
     }
 
+    /**
+     * Send a file back to the originator of the trace.
+     *
+     * @param path the path to the file starting from main/resources
+     */
     public static void replyFileToOrigin(String path) throws FileNotFoundException, IOException {
-        byte[] data = Merrymake.class.getClassLoader().getResourceAsStream(path).readAllBytes();
         MimeType mime = MimeType.ext2mime.get(path.substring(path.lastIndexOf('.') + 1).toLowerCase());
         if (mime == null)
             throw new RuntimeException("Unknown file type. Add mimeType argument.");
-        postToRapids("$reply", data, mime);
+        replyFileToOrigin(path, mime);
     }
 
 }

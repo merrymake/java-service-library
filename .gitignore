@@ -5,3 +5,4 @@
 
 # Ignore Gradle build output directory
 lib/bin
+lib/build
