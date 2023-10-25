@@ -167,9 +167,9 @@ public class MimeType {
             put("xml", xml);
             put("xul", xul);
             put("zip", zip);
-            put("_3gp", _3gp);
-            put("_3g2", _3g2);
-            put("_7z", _7z);
+            put("3gp", _3gp);
+            put("3g2", _3g2);
+            put("7z", _7z);
         }
     });
 
