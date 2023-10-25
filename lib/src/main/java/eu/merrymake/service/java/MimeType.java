@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * MimeType is used to specify the ContentType of a payload. For convenience the most common file extensions are defined as constants.
+ * MimeType is used to specify the ContentType of a payload. For convenience the
+ * most common file extensions are defined as constants.
+ *
  * @author Merrymake.eu (Chirstian Clausen, Nicolaj Græsholt)
  */
 public class MimeType {
@@ -25,7 +27,8 @@ public class MimeType {
     public static final MimeType css = new MimeType("text", "css");
     public static final MimeType csv = new MimeType("text", "csv");
     public static final MimeType doc = new MimeType("application", "msword");
-    public static final MimeType docx = new MimeType("application", "vnd.openxmlformats-officedocument.wordprocessingml.document");
+    public static final MimeType docx = new MimeType("application",
+            "vnd.openxmlformats-officedocument.wordprocessingml.document");
     public static final MimeType eot = new MimeType("application", "vnd.ms-fontobject");
     public static final MimeType epub = new MimeType("application", "epub+zip");
     public static final MimeType gz = new MimeType("application", "gzip");
@@ -59,7 +62,8 @@ public class MimeType {
     public static final MimeType pdf = new MimeType("application", "pdf");
     public static final MimeType php = new MimeType("application", "x-httpd-php");
     public static final MimeType ppt = new MimeType("application", "vnd.ms-powerpoint");
-    public static final MimeType pptx = new MimeType("application", "vnd.openxmlformats-officedocument.presentationml.presentation");
+    public static final MimeType pptx = new MimeType("application",
+            "vnd.openxmlformats-officedocument.presentationml.presentation");
     public static final MimeType rar = new MimeType("application", "vnd.rar");
     public static final MimeType rtf = new MimeType("application", "rtf");
     public static final MimeType sh = new MimeType("application", "x-sh");
@@ -79,7 +83,8 @@ public class MimeType {
     public static final MimeType woff2 = new MimeType("font", "woff2");
     public static final MimeType xhtml = new MimeType("application", "xhtml+xml");
     public static final MimeType xls = new MimeType("application", "vnd.ms-excel");
-    public static final MimeType xlsx = new MimeType("application", "vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+    public static final MimeType xlsx = new MimeType("application",
+            "vnd.openxmlformats-officedocument.spreadsheetml.sheet");
     public static final MimeType xml = new MimeType("application", "xml");
     public static final MimeType xul = new MimeType("application", "vnd.mozilla.xul+xml");
     public static final MimeType zip = new MimeType("application", "zip");
@@ -87,94 +92,97 @@ public class MimeType {
     public static final MimeType _3g2 = new MimeType("video", "3gpp2");
     public static final MimeType _7z = new MimeType("application", "x-7z-compressed");
 
-    static final Map<String, MimeType> ext2mime = Collections.unmodifiableMap(new HashMap<String, MimeType>(){{
-        put("aac", aac);
-        put("abw", abw);
-        put("arc", arc);
-        put("avif", avif);
-        put("avi", avi);
-        put("azw", azw);
-        put("bin", bin);
-        put("bmp", bmp);
-        put("bz", bz);
-        put("bz2", bz2);
-        put("cda", cda);
-        put("csh", csh);
-        put("css", css);
-        put("csv", csv);
-        put("doc", doc);
-        put("docx", docx);
-        put("eot", eot);
-        put("epub", epub);
-        put("gz", gz);
-        put("gif", gif);
-        put("htm", htm);
-        put("html", html);
-        put("ico", ico);
-        put("ics", ics);
-        put("jar", jar);
-        put("jpeg", jpeg);
-        put("jpg", jpg);
-        put("js", js);
-        put("json", json);
-        put("jsonld", jsonld);
-        put("mid", mid);
-        put("midi", midi);
-        put("mjs", mjs);
-        put("mp3", mp3);
-        put("mp4", mp4);
-        put("mpeg", mpeg);
-        put("mpkg", mpkg);
-        put("odp", odp);
-        put("ods", ods);
-        put("odt", odt);
-        put("oga", oga);
-        put("ogv", ogv);
-        put("ogx", ogx);
-        put("opus", opus);
-        put("otf", otf);
-        put("png", png);
-        put("pdf", pdf);
-        put("php", php);
-        put("ppt", ppt);
-        put("pptx", pptx);
-        put("rar", rar);
-        put("rtf", rtf);
-        put("sh", sh);
-        put("svg", svg);
-        put("tar", tar);
-        put("tif", tif);
-        put("tiff", tiff);
-        put("ts", ts);
-        put("ttf", ttf);
-        put("txt", txt);
-        put("vsd", vsd);
-        put("wav", wav);
-        put("weba", weba);
-        put("webm", webm);
-        put("webp", webp);
-        put("woff", woff);
-        put("woff2", woff2);
-        put("xhtml", xhtml);
-        put("xls", xls);
-        put("xlsx", xlsx);
-        put("xml", xml);
-        put("xul", xul);
-        put("zip", zip);
-        put("_3gp", _3gp);
-        put("_3g2", _3g2);
-        put("_7z", _7z);
-    }});
+    static final Map<String, MimeType> ext2mime = Collections.unmodifiableMap(new HashMap<String, MimeType>() {
+        {
+            put("aac", aac);
+            put("abw", abw);
+            put("arc", arc);
+            put("avif", avif);
+            put("avi", avi);
+            put("azw", azw);
+            put("bin", bin);
+            put("bmp", bmp);
+            put("bz", bz);
+            put("bz2", bz2);
+            put("cda", cda);
+            put("csh", csh);
+            put("css", css);
+            put("csv", csv);
+            put("doc", doc);
+            put("docx", docx);
+            put("eot", eot);
+            put("epub", epub);
+            put("gz", gz);
+            put("gif", gif);
+            put("htm", htm);
+            put("html", html);
+            put("ico", ico);
+            put("ics", ics);
+            put("jar", jar);
+            put("jpeg", jpeg);
+            put("jpg", jpg);
+            put("js", js);
+            put("json", json);
+            put("jsonld", jsonld);
+            put("mid", mid);
+            put("midi", midi);
+            put("mjs", mjs);
+            put("mp3", mp3);
+            put("mp4", mp4);
+            put("mpeg", mpeg);
+            put("mpkg", mpkg);
+            put("odp", odp);
+            put("ods", ods);
+            put("odt", odt);
+            put("oga", oga);
+            put("ogv", ogv);
+            put("ogx", ogx);
+            put("opus", opus);
+            put("otf", otf);
+            put("png", png);
+            put("pdf", pdf);
+            put("php", php);
+            put("ppt", ppt);
+            put("pptx", pptx);
+            put("rar", rar);
+            put("rtf", rtf);
+            put("sh", sh);
+            put("svg", svg);
+            put("tar", tar);
+            put("tif", tif);
+            put("tiff", tiff);
+            put("ts", ts);
+            put("ttf", ttf);
+            put("txt", txt);
+            put("vsd", vsd);
+            put("wav", wav);
+            put("weba", weba);
+            put("webm", webm);
+            put("webp", webp);
+            put("woff", woff);
+            put("woff2", woff2);
+            put("xhtml", xhtml);
+            put("xls", xls);
+            put("xlsx", xlsx);
+            put("xml", xml);
+            put("xul", xul);
+            put("zip", zip);
+            put("_3gp", _3gp);
+            put("_3g2", _3g2);
+            put("_7z", _7z);
+        }
+    });
 
     private final String type;
     private final String tail;
 
     /**
      * Specify a content-type like application/json
+     *
      * @param type the part before /
      * @param tail the part after /
      */
-    public MimeType(String type, String tail){
+    public MimeType(String type, String tail) {
         this.type = type;
         this.tail = tail;
     }
