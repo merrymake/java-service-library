@@ -6,10 +6,7 @@
 
    ```groovy
    repositories {
-       ...
-       maven {
-           url = uri("https://maven.pkg.github.com/merrymake/java-service-library")
-       }
+       mavenCentral()
    }
    ```
 
@@ -18,7 +15,7 @@
    ```groovy
    dependencies {
        ...
-       implementation 'eu.merrymake.service.java:java-service-template:<version>'
+       implementation 'eu.merrymake.service.java:java-service-library:<version>'
    }
    ```
 
@@ -62,9 +59,3 @@ In another project,
    ```
 
 Where the version matches the one in this projects' `build.gradle`.
-
-## Making a new Release
-
-1. Change the version in `build.gradle`.
-1. Create a new tag, matching the version in `build.gradle`.
-1. Push the tag to the repository.
