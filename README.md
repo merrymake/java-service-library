@@ -1,61 +1,32 @@
 # Java Service Library for Merrymake
 
-## Usage (Gradle)
+This is the official Java service library for Merrymake. It defines all the basic functions needed to work with Merrymake.
 
-1. In your `build.gradle` file, add this repository:
+## Usage
 
-   ```groovy
-   repositories {
-       mavenCentral()
-   }
-   ```
+Here is the most basic example of how to use this library: 
 
-1. Under dependencies, specify the artifact and version:
+```java
+package eu.merrymake.template.java;
 
-   ```groovy
-   dependencies {
-       ...
-       implementation 'eu.merrymake.service.java:java-service-library:<version>'
-   }
-   ```
+import eu.merrymake.service.java.*;
 
-## Development
+public class App {
 
-This library is built with the LTS version of the OpenJDK,
-which is currently 17.0.2.
+    static void handleHello(byte[] payloadBytes, Envelope envelope) {
+        String payload = new String(payloadBytes);
+        Merrymake.replyToOrigin(String.format("Hello, %s!", payload), MimeType.txt);
+    }
 
-## Build
-
-```shell
-./gradlew build
+    public static void main(String[] args) {
+        Merrymake.service(args)
+                .handle("handleHello", App::handleHello);
+    }
+}
 ```
 
-## Testing Locally
+## Tutorials and templates
 
-To push a package to your local Maven repository, use the following command:
+For more information check out our tutorials at [merrymake.dev](https://merrymake.dev).
 
-```shell
-./gradlew clean build publishToMavenLocal
-```
-
-In another project,
-
-1. add the repository,
-
-   ```groovy
-   repositories {
-       mavenLocal()
-       ...
-   }
-   ```
-
-1. add the dependency:
-
-   ```groovy
-   dependencies {
-       ...
-       implementation 'eu.merrymake.service.java:java-service-template:0.1.0-SNAPSHOT'
-   }
-   ```
-
-Where the version matches the one in this projects' `build.gradle`.
+All templates are available through our CLI and on our [GitHub](https://github.com/merrymake).

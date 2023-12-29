@@ -1,6 +1,6 @@
 package eu.merrymake.service.java;
 
-import org.json.JSONObject;
+import org.json.JSONStringer;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -10,7 +10,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 /**
- * Merrymake is the main class of this library, as it exposes all other functionality, through a builder pattern.
+ * Merrymake is the main class of this library, as it exposes all other
+ * functionality, through a builder pattern.
  *
  * @author Merrymake.eu (Chirstian Clausen, Nicolaj Græsholt)
  */
@@ -31,12 +32,12 @@ public class Merrymake implements MerrymakeInterface {
     }
 
     private final String action;
-    private final JSONObject envelope;
+    private final Envelope envelope;
     private final byte[] payloadBytes;
 
     private Merrymake(String[] args) {
         action = args[args.length - 2];
-        envelope = new JSONObject(args[args.length - 1]);
+        envelope = new Envelope(args[args.length - 1]);
         try {
             payloadBytes = getPayload();
         } catch (IOException e) {
@@ -74,7 +75,8 @@ public class Merrymake implements MerrymakeInterface {
     }
 
     /**
-     * Post an event to the central message queue (Rapids), with a payload and its content type.
+     * Post an event to the central message queue (Rapids), with a payload and its
+     * content type.
      *
      * @param event       the event to post
      * @param body        the payload
@@ -87,7 +89,8 @@ public class Merrymake implements MerrymakeInterface {
     }
 
     /**
-     * Post an event to the central message queue (Rapids), with a payload and its content type.
+     * Post an event to the central message queue (Rapids), with a payload and its
+     * content type.
      *
      * @param event       the event to post
      * @param body        the payload
@@ -110,7 +113,8 @@ public class Merrymake implements MerrymakeInterface {
     }
 
     /**
-     * Post a reply back to the originator of the trace, with a payload and its content type.
+     * Post a reply back to the originator of the trace, with a payload and its
+     * content type.
      *
      * @param body        the payload
      * @param contentType the content type of the payload
@@ -120,7 +124,8 @@ public class Merrymake implements MerrymakeInterface {
     }
 
     /**
-     * Post a reply back to the originator of the trace, with a payload and its content type.
+     * Post a reply back to the originator of the trace, with a payload and its
+     * content type.
      *
      * @param body        the payload
      * @param contentType the content type of the payload
@@ -137,7 +142,8 @@ public class Merrymake implements MerrymakeInterface {
      */
     public static void replyFileToOrigin(String path, MimeType contentType) throws FileNotFoundException, IOException {
         try (var resource = Merrymake.class.getClassLoader().getResourceAsStream(path)) {
-            if(resource == null) throw new FileNotFoundException();
+            if (resource == null)
+                throw new FileNotFoundException();
             byte[] data = resource.readAllBytes();
             postToRapids("$reply", data, contentType);
         }
@@ -155,4 +161,32 @@ public class Merrymake implements MerrymakeInterface {
         replyFileToOrigin(path, mime);
     }
 
+    /**
+     * Subscribe to a channel, so events will stream back messages broadcast to that
+     * channel. You can join multiple channels. You stay in the channel until the
+     * request is terminated.
+     *
+     * Note: The origin-event has to be set as "streaming: true" in the
+     * event-catalogue.
+     *
+     * @param channel the channel to join
+     */
+    public static void joinChannel(String channel) {
+        postToRapids("$join", channel, MimeType.txt);
+    }
+
+    /**
+     * Broadcast a message (event and payload) to all listeners in a channel.
+     *
+     * @param to      the channel to broadcast to
+     * @param event   the event-type of the message
+     * @param payload the payload of the message
+     */
+    public static void broadcastToChannel(String to, String event, String payload) {
+        postToRapids("$broadcast", new JSONStringer().object()
+                .key("to").value(to)
+                .key("event").value(event)
+                .key("payload").value(payload)
+                .endObject().toString(), MimeType.json);
+    }
 }

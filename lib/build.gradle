@@ -52,7 +52,7 @@ tasks.named('jar') {
 }
 
 group = "eu.merrymake.service.java"
-version = '0.2.1'
+version = '1.0.0-SNAPSHOT'
 
 publishing {
     publications {
