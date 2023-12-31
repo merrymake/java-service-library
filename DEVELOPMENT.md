@@ -1,5 +1,15 @@
 # Development notes
 
+## Testing
+
+Tests can be run using the `test`-gradle target,
+
+```shell
+$ ./gradlew test
+# you may want to "clean and build" before testing, if you haven't already.
+$ ./gradlew clean build test
+```
+
 ## Releasing
 
 ### Prerequisites
