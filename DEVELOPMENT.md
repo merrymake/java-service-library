@@ -36,6 +36,8 @@ or <https://central.sonatype.org/publish/publish-gradle/#credentials>
    $ export CENTRAL_USER=<username>
    ```
 
+   > NB: this is your `user:pass` to <https://s01.oss.sonatype.org>
+
 1. Update the version of the artifact by editing the
    `version = '1.0.0-SNAPSHOT'` in the `/lib/build.gradle` file.
 
@@ -103,7 +105,7 @@ These can not be deleted.
 
 You can do this after
 
-- publishing to Staging, and
+- publishing to Staging (yes, the guide above,) and
 - making sure your signatures are publicly available, see guide above.
 
 1. Navigate to "Build Promotion" -> "Staging Repositories,"
